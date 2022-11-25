@@ -1,0 +1,28 @@
+{% extends 'parts/base.twig' %}
+
+{% block body %}
+
+    <table class="table table-dark table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Days</th>
+            <th scope="col">V1</th>
+            <th scope="col">V2</th>
+            <th scope="col">%</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in table %}
+            <tr>
+                <th>{{ item.days }}</th>
+                <td>{{ item.V1 }}</td>
+                <td>{{ item.V2 }}</td>
+                <td class="{{ (item.interest > 7.4) ? 'alert-danger' : '' }}">{{ item.interest }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}

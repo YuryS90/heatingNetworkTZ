@@ -1,0 +1,23 @@
+{
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^0.6.0",
+        "php-di/php-di": "^6.0",
+        "slim/php-view": "^3.0",
+        "ext-json": "*",
+        "sunra/dbug": "^0.2",
+        "slim/twig-view": "^3.3",
+        "ext-pdo": "^7.4",
+        "php": "~7.4",
+        "ext-mysqli": "*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    }
+}
