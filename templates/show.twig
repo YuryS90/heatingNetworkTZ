@@ -1,28 +1,155 @@
 {% extends 'parts/base.twig' %}
 
 {% block body %}
-
-    <table class="table table-dark table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Days</th>
-            <th scope="col">V1</th>
-            <th scope="col">V2</th>
-            <th scope="col">%</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for item in table %}
+    <div class="container mb-5">
+        <table class="table table-dark table-striped table-hover">
+            <thead>
             <tr>
-                <th>{{ item.days }}</th>
-                <td>{{ item.V1 }}</td>
-                <td>{{ item.V2 }}</td>
-                <td class="{{ (item.interest > 7.4) ? 'alert-danger' : '' }}">{{ item.interest }}</td>
+                <th class="col-lg-2">Days</th>
+                <th class="col-lg-2">V1</th>
+                <th class="col-lg-2">V2</th>
+                <th class="col-lg-2">%</th>
             </tr>
-        {% endfor %}
-        </tbody>
+            </thead>
 
-    </table>
+            <tbody>
+            {% for item in data %}
+                <tr>
+                    <th>{{ item.days }}</th>
+                    <td>{{ item.V1 }}</td>
+                    <td>{{ item.V2 }}</td>
+                    <td class="{{ (item.interest > 7.4) ? 'alert-danger' : '' }}">{{ item.interest }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="container mt-5">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+
+
+                {# Возможность пролистывания В начало #}
+
+                {% if currentPageNum > midSize + 1 %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white"
+                           href="/sensor/show/?page=1"
+                           aria-label="Previous">
+                            <span aria-hidden="true">В начало</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+                {# Возможность пролистывания << #}
+
+                {% if currentPageNum > 1 %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white"
+                           href="/sensor/show/?page={{ currentPageNum - 1 }}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+                {# Если стр больше 10, то отрисовка 3 ссылок (сколько захотим) слева #}
+                {#                {% if totalPages > 10 %} #}
+                {#                    {% for midSize in range(midSize, 0) %} #}
+                {#                        {% if (currentPageNum - midSize) > 0 %} #}
+
+                {#                            <li class="page-item"> #}
+                {#                                <a class="page-link bg-dark text-white" #}
+                {#                                   href="/sensor/show/?page={{ currentPageNum - midSize }}"> #}
+                {#                                    {{ currentPageNum - midSize }} #}
+                {#                                </a> #}
+                {#                            </li> #}
+
+                {#                        {% endif %} #}
+                {#                    {% endfor %} #}
+                {#                {% endif %} #}
+
+                {# Отображение страниц #}
+
+                {#                {% for pageNum in range(pageNum, midSize) %} #}
+                {#                {% for pageNum in pageNum..totalPages %} #}
+
+                {#                    {% if currentPageNum == pageNum %} #}
+                {#                        <li class="page-item active"> #}
+                {#                    {% endif %} #}
+
+                {#                    {% if currentPageNum == pageNum and pageNum == 1 %} #}
+                {#                        <li class="page-item disabled"> #}
+                {#                    {% endif %} #}
+
+                {#                    <a class="page-link bg-dark text-white" href="/sensor/show/?page={{ pageNum }}">{{ pageNum }}</a> #}
+                {#                    </li> #}
+
+                {#                {% endfor %} #}
+
+
+                {% for pageNum in range(pageNum, midSize) %}
+
+                    {% if  (currentPageNum - midSize) > 0 %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white"
+                               href="/sensor/show/?page={{ pageNum }}">{{ pageNum }}</a>
+                        </li>
+                    {% endif %}
+
+                {% endfor %}
+
+                <li class="page-item active">
+                    <a class="page-link bg-dark text-white"
+                       href="/sensor/show/?page={{ currentPageNum }}">{{ currentPageNum }}</a>
+                </li>
+
+
+                {% for i in range(i, midSize) %}
+
+                    {% if  (currentPageNum + i) <= totalPages %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white"
+                               href="/sensor/show/?page={{ currentPageNum + i }}">{{ currentPageNum + i}}</a>
+                        </li>
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {# Возможность пролистывания >> #}
+
+                {% if currentPageNum < totalPages %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white"
+                           href="/sensor/show/?page={{ currentPageNum + 1 }}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+                {# Возможность пролистывания на последнюю #}
+
+                {% if currentPageNum < (totalPages - midSize) %}
+                    <li class="page-item">
+                        <a class="page-link bg-dark text-white"
+                           href="/sensor/show/?page={{ totalPages }}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">В конец</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+            </ul>
+        </nav>
+    </div>
 
 {% endblock %}

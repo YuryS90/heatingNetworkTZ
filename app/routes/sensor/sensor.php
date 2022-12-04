@@ -8,6 +8,9 @@ return function ($app)
     $app->map(['*'], '/add[/]', \Controllers\Sensor\AddController::class);
 
     // Маршрут для "Показать данные"
-    $app->map(['*'], '/show[/]', \Controllers\Sensor\ShowController::class);
+    //$app->map(['*'], '/show[/]', \Controllers\Sensor\ShowController::class);
+
+    // [сюда] можно записать любое слово. В контроллер оно не попадает
+    $app->get('/show/[page]', \Controllers\Sensor\ShowController::class);
 
 };
