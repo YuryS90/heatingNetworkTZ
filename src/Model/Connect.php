@@ -2,17 +2,29 @@
 
 namespace Model;
 
-use Common\ControllerTrait;
 use mysqli;
+use mysqli_result;
 
 class Connect
 {
-    use ControllerTrait;
+    private $connection;
+    const TABLE = 'sensor';
 
-    private function connect()
+
+    /**
+     * @param $settings
+     */
+    public function __construct($settings)
     {
-        $settings = $this->settings['db'];
+        $this->connection = $this->connect($settings);
+    }
 
+    /**
+     * @param $settings
+     * @return mysqli|void
+     */
+    private function connect($settings)
+    {
         $conn = new mysqli(
             $settings['host'],
             $settings['username'],
@@ -27,33 +39,42 @@ class Connect
         return $conn;
     }
 
-    public function query($query)
+    /**
+     * @param $query
+     * @return bool|mysqli_result|void
+     */
+    public function insert($query)
     {
-        if ($this->connect()->errno != 0) {
-            die('Что-то пошло не так ' . $this->connect()->errno);
+        if ($this->connection->errno != 0) {
+            die('Что-то пошло не так ' . $this->connection->errno);
         }
 
-        return $this->connect()->query($query);
+        return $this->connection->query($query);
     }
 
-    public function getDataSensor(): ?array
+    public function query($query)
     {
-        // Получаем из БД объектом все старые данные
-        $sensorData = $this->connect()->query('SELECT * FROM `sensor`');
+        return $this->connection->query($query);
+    }
 
-        // Формирование ассоциативного массива из объекта
-        if ($sensorData->num_rows > 0) {
-            $table = [];
-            while ($arrUsers = $sensorData->fetch_assoc()) {
-                $table[] = $arrUsers;
-            }
-        }
+    /**
+     * @param $query
+     * @return array|null
+     */
+    public function getData($query): ?array
+    {
+        $mysqliResult = $this->connection->query($query);
 
-        if (empty($table)) {
+        if ($mysqliResult->num_rows == 0) {
             return null;
         }
 
-        return $table;
+        $data = [];
+        while ($item = $mysqliResult->fetch_assoc()) {
+            $data[] = $item;
+        }
+
+        return $data;
     }
 
 }

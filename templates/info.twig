@@ -1,0 +1,50 @@
+{% extends 'parts/base.twig' %}
+
+{% block info %}
+
+    {% if empty %}
+
+        <div class="alert alert-info" role="alert">
+            Данные в БД отсутствуют!
+        </div>
+
+    {% endif %}
+
+    {% if noData %}
+
+        <div class="alert alert-danger" role="alert">
+            Нет данных с датчика(ов)!
+        </div>
+
+        <div class="alert alert-info" role="alert">
+            Добавлено в БД "данные отсутствуют"!
+        </div>
+
+    {% endif %}
+
+    {% if without %}
+
+        <div class="alert alert-info" role="alert">
+            Добавлено в БД без расчёта %!
+        </div>
+
+    {% endif %}
+
+    {% if oldNoData %}
+
+        <div class="alert alert-info" role="alert">
+            Добавлено в БД без расчёта %!
+            Так как в предыдущем нет данных.
+        </div>
+
+    {% endif %}
+
+    {% if all %}
+
+        <div class="alert alert-success" role="alert">
+            Добавлено в БД с расчётом %!
+        </div>
+
+    {% endif %}
+
+{% endblock %}

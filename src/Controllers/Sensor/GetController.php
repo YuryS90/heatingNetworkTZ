@@ -4,6 +4,7 @@ namespace Controllers\Sensor;
 
 use Common\ControllerTrait;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Views\Twig;
 
 class GetController
 {
@@ -14,12 +15,10 @@ class GetController
      */
     public function run(): ResponseInterface
     {
-        $view = $this->twig->render('sendData.twig', [
+        $view = Twig::fromRequest($this->request);
+
+        return $view->render($this->response, 'sendData.twig', [
             'title' => 'Отправка данных',
         ]);
-
-        $this->write($view);
-
-        return $this->response;
     }
 }

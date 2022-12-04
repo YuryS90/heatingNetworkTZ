@@ -1,0 +1,18 @@
+body {
+    background-color: #2C3034;
+}
+
+ul li a.nav-link {
+    text-decoration: none;
+    color: white
+}
+
+ul li a.nav-link:hover {
+    text-decoration: none;
+    color: aquamarine
+}
+
+
+.container {
+    color: white;
+}

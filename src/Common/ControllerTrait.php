@@ -2,8 +2,6 @@
 
 namespace Common;
 
-use ErrorException;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -15,10 +13,7 @@ trait ControllerTrait
     private Response $response;
     private $args;
 
-    /**
-     * @throws ErrorException
-     */
-    public function __invoke(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $this->request = $request;
         $this->response = $response;
@@ -35,14 +30,4 @@ trait ControllerTrait
     {
         return $this->request->getParsedBody();
     }
-
-    /**
-     * @param $data
-     * @return int
-     */
-    public function write($data): int
-    {
-        return $this->response->getBody()->write($data);
-    }
-
 }

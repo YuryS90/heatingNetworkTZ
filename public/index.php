@@ -1,6 +1,10 @@
 <?php
 
+
 use Slim\Factory\AppFactory;
+
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 chdir(__DIR__ . '/../');
 
@@ -22,6 +26,12 @@ AppFactory::setContainer($container);
 
 // Создаем приложение
 $app = AppFactory::create();
+
+// Создаем Twig
+$twig = Twig::create('templates', ['cache' => false]);
+
+// Добавляем промежуточное ПО Twig-View
+$app->add(TwigMiddleware::create($app, $twig));
 
 $app->group('', include 'app/routes/root.php');
 

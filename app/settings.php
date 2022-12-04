@@ -2,7 +2,6 @@
 
 return [
     'settings' => [
-
         // Настройки подключения к БД
         'db' => [
             'host' => 'localhost',
@@ -10,10 +9,5 @@ return [
             'password' => 'root',
             'database' => 'water'
         ],
-
-        // Указываем, где Loader'у искать twig-шаблоны (из документации)
-        'loader' => function () {
-            return new \Twig\Loader\FilesystemLoader('templates');
-        },
     ]
 ];

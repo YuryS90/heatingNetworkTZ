@@ -4,6 +4,7 @@ namespace Controllers\Home;
 
 use Common\ControllerTrait;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Views\Twig;
 
 class HomeController
 {
@@ -14,12 +15,12 @@ class HomeController
      */
     public function run(): ResponseInterface
     {
-        $view = $this->twig->render('home.twig', [
+        $view = Twig::fromRequest($this->request);
+
+        // Метод render() возвращает новый объект ответа PSR-7,
+        // телом которого является визуализированный шаблон Twig.
+        return $view->render($this->response, 'home.twig', [
             'title' => 'Главная',
         ]);
-
-        $this->write($view);
-
-        return $this->response;
     }
 }
